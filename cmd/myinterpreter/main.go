@@ -5,6 +5,29 @@ import (
 	"os"
 )
 
+const (
+	LEFT_PAREN  = "LEFT_PAREN"
+	RIGHT_PAREN = "RIGHT_PAREN"
+	LEFT_BRACE  = "LEFT_BRACE"
+	RIGHT_BRACE = "RIGHT_BRACE"
+	COMMA       = "COMMA"
+	DOT         = "DOT"
+	MINUS       = "MINUS"
+	PLUS        = "PLUS"
+	SEMICOLON   = "SEMICOLON"
+	STAR        = "STAR"
+)
+
+var current int = 0
+var fileContent string = ""
+
+func check(e error) {
+	if e != nil {
+		fmt.Fprintf(os.Stderr, "Error reading file: %v\n", e)
+		os.Exit(1)
+	}
+}
+
 func main() {
 	// You can use print statements as follows for debugging, they'll be visible when running tests.
 	fmt.Fprintln(os.Stderr, "Logs from your program will appear here!")
@@ -21,18 +44,42 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Uncomment this block to pass the first stage
-	
 	filename := os.Args[2]
 	fileContents, err := os.ReadFile(filename)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error reading file: %v\n", err)
-		os.Exit(1)
-	}
-	
+	check(err)
+
 	if len(fileContents) > 0 {
-		panic("Scanner not implemented")
+		fileContent = string(fileContents)
+		scanToken()
+		fmt.Println("EOF  null")
 	} else {
-		fmt.Println("EOF  null") // Placeholder, remove this line when implementing the scanner
+		panic("Unable to read fileContents")
+	}
+}
+
+func scanToken() {
+	for _, c := range fileContent {
+		switch c {
+		case '(':
+			fmt.Println(LEFT_PAREN, "(", "null")
+		case ')':
+			fmt.Println(RIGHT_PAREN, ")", "null")
+		case '{':
+			fmt.Println(LEFT_BRACE, "{", "null")
+		case '}':
+			fmt.Println(RIGHT_BRACE, "}", "null")
+		case ',':
+			fmt.Println(COMMA, ",", "null")
+		case '.':
+			fmt.Println(DOT, ".", "null")
+		case '-':
+			fmt.Println(MINUS, "-", "null")
+		case '+':
+			fmt.Println(PLUS, "+", "null")
+		case ';':
+			fmt.Println(SEMICOLON, ";", "null")
+		case '*':
+			fmt.Println(STAR, "*", "null")
+		}
 	}
 }

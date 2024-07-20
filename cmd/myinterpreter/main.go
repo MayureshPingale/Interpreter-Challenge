@@ -18,7 +18,6 @@ const (
 	STAR        = "STAR"
 )
 
-var current int = 0
 var fileContent string = ""
 
 func check(e error) {
@@ -48,15 +47,8 @@ func main() {
 	fileContents, err := os.ReadFile(filename)
 	check(err)
 
-	if len(fileContents) > 0 {
-		fileContent = string(fileContents)
-		scanToken()
-		fmt.Println("EOF  null")
-	} else {
-		fileContent = string(fileContents)
-		scanToken()
-		fmt.Println("EOF  null")
-	}
+	fileContent = string(fileContents)
+	scanToken()
 }
 
 func scanToken() {
@@ -82,6 +74,8 @@ func scanToken() {
 			fmt.Println(SEMICOLON, ";", "null")
 		case '*':
 			fmt.Println(STAR, "*", "null")
+		case '\n':
+			fmt.Println("EOF  null")
 		}
 	}
 }

@@ -49,6 +49,7 @@ func main() {
 
 	fileContent = string(fileContents)
 	scanToken()
+	fmt.Println("EOF  null")
 }
 
 func scanToken() {

@@ -53,7 +53,9 @@ func main() {
 		scanToken()
 		fmt.Println("EOF  null")
 	} else {
-		panic("Unable to read fileContents")
+		fileContent = string(fileContents)
+		scanToken()
+		fmt.Println("EOF  null")
 	}
 }
 

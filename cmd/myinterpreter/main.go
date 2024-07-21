@@ -48,12 +48,17 @@ func main() {
 	check(err)
 
 	fileContent = string(fileContents)
-	scanToken()
+	var hasError bool = scanToken()
 	fmt.Println("EOF  null")
+
+	if hasError {
+		os.Exit(65)
+	}
 }
 
-func scanToken() {
-	var lineNo int = 0
+func scanToken() bool {
+	var error bool = false
+	var lineNo int = 1
 	for _, c := range fileContent {
 		switch c {
 		case '(':
@@ -80,6 +85,9 @@ func scanToken() {
 			lineNo++
 		default:
 			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
+			error = true
 		}
 	}
+
+	return error
 }

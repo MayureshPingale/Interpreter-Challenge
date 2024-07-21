@@ -53,6 +53,7 @@ func main() {
 }
 
 func scanToken() {
+	var lineNo int = 0
 	for _, c := range fileContent {
 		switch c {
 		case '(':
@@ -76,7 +77,9 @@ func scanToken() {
 		case '*':
 			fmt.Println(STAR, "*", "null")
 		case '\n':
-			fmt.Println("EOF  null")
+			lineNo++
+		default:
+			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
 		}
 	}
 }

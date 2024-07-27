@@ -57,6 +57,7 @@ func main() {
 	check(err)
 
 	fileContent = string(fileContents)
+
 	var hasError bool = scanToken()
 	fmt.Println("EOF  null")
 

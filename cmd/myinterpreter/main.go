@@ -94,29 +94,13 @@ func scanToken() bool {
 		case '\n':
 			lineNo++
 		case '!':
-			if match('=') {
-				fmt.Println(BANG_EQUAL, "!=", "null")
-			} else {
-				fmt.Println(BANG, "=", "null")
-			}
+			checkDualOperator('!', '=', BANG_EQUAL, BANG)
 		case '=':
-			if match('=') {
-				fmt.Println(EQUAL_EQUAL, "==", "null")
-			} else {
-				fmt.Println(EQUAL, "=", "null")
-			}
+			checkDualOperator('=', '=', EQUAL_EQUAL, EQUAL)
 		case '<':
-			if match('=') {
-				fmt.Println(LESS_EQUAL, "<=", "null")
-			} else {
-				fmt.Println(LESS, ">", "null")
-			}
+			checkDualOperator('<', '=', LESS_EQUAL, LESS)
 		case '>':
-			if match('=') {
-				fmt.Println(GREATER_EQUAL, ">=", "null")
-			} else {
-				fmt.Println(GREATER, ">", "null")
-			}
+			checkDualOperator('>', '=', GREATER_EQUAL, GREATER)
 		default:
 			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
 			error = true
@@ -137,4 +121,12 @@ func match(exp rune) bool {
 
 	itr++
 	return true
+}
+
+func checkDualOperator(firstChar rune, secondChar rune, dualOperatorToken string, singleCharToken string) {
+	if match(secondChar) {
+		fmt.Println(dualOperatorToken, string(firstChar)+string(secondChar), "null")
+	} else {
+		fmt.Println(singleCharToken, string(firstChar), "null")
+	}
 }

@@ -162,6 +162,6 @@ func scanString() {
 		fmt.Fprintf(os.Stderr, "[line %d] Error: Unterminated string.\n", lineNo)
 	} else {
 		var str = fileContent[start : itr+1]
-		fmt.Println(STRING, str, "null")
+		fmt.Println(STRING, str, fileContent[start+1:itr])
 	}
 }

@@ -160,6 +160,7 @@ func scanString() {
 
 	if itr == len(fileContent) {
 		fmt.Fprintf(os.Stderr, "[line %d] Error: Unterminated string.\n", lineNo)
+		scanningError = true
 	} else {
 		var str = fileContent[start : itr+1]
 		fmt.Println(STRING, str, fileContent[start+1:itr])

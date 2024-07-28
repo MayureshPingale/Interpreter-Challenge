@@ -24,6 +24,7 @@ const (
 	EQUAL         = "EQUAL"
 	LESS          = "LESS"
 	GREATER       = "GREATER"
+	SLASH         = "SLASH"
 )
 
 var fileContent string = ""
@@ -102,6 +103,14 @@ func scanToken() bool {
 			checkDualOperator('<', '=', LESS_EQUAL, LESS)
 		case '>':
 			checkDualOperator('>', '=', GREATER_EQUAL, GREATER)
+		case '/':
+			if match('/') {
+				for itr < len(fileContent) && rune(fileContent[itr]) != '\n' {
+					itr++
+				}
+			} else {
+				fmt.Println(SLASH, "/", "null")
+			}
 		default:
 			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
 			error = true

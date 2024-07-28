@@ -25,10 +25,13 @@ const (
 	LESS          = "LESS"
 	GREATER       = "GREATER"
 	SLASH         = "SLASH"
+	STRING        = "STRING"
 )
 
 var fileContent string = ""
 var itr int = 0
+var lineNo int = 1
+var scanningError bool = false
 
 func check(e error) {
 	if e != nil {
@@ -59,17 +62,15 @@ func main() {
 
 	fileContent = string(fileContents)
 
-	var hasError bool = scanToken()
+	scanToken()
 	fmt.Println("EOF  null")
 
-	if hasError {
+	if scanningError {
 		os.Exit(65)
 	}
 }
 
-func scanToken() bool {
-	var error bool = false
-	var lineNo int = 1
+func scanToken() {
 	for ; itr < len(fileContent); itr++ {
 		var c = rune(fileContent[itr])
 		switch c {
@@ -115,13 +116,13 @@ func scanToken() bool {
 		case ' ':
 		case '\r':
 		case '\t':
+		case '"':
+
 		default:
 			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
-			error = true
+			scanningError = true
 		}
 	}
-
-	return error
 }
 
 func match(exp rune) bool {

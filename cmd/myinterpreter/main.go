@@ -117,7 +117,7 @@ func scanToken() {
 		case '\r':
 		case '\t':
 		case '"':
-
+			scanString()
 		default:
 			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
 			scanningError = true
@@ -143,5 +143,25 @@ func checkDualOperator(firstChar rune, secondChar rune, dualOperatorToken string
 		fmt.Println(dualOperatorToken, string(firstChar)+string(secondChar), "null")
 	} else {
 		fmt.Println(singleCharToken, string(firstChar), "null")
+	}
+}
+
+func scanString() {
+	var start int = itr
+	itr++
+
+	for itr < len(fileContent) && fileContent[itr] != '"' {
+		if fileContent[itr] == '\n' {
+			lineNo++
+		}
+
+		itr++
+	}
+
+	if itr == len(fileContent) {
+		fmt.Fprintf(os.Stderr, "[line %d] Error: Unterminated string.\n", lineNo)
+	} else {
+		var str = fileContent[start : itr+1]
+		fmt.Println(STRING, str, "null")
 	}
 }

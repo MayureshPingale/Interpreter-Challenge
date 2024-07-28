@@ -108,6 +108,7 @@ func scanToken() bool {
 				for itr < len(fileContent) && rune(fileContent[itr]) != '\n' {
 					itr++
 				}
+				lineNo++
 			} else {
 				fmt.Println(SLASH, "/", "null")
 			}

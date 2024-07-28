@@ -111,6 +111,9 @@ func scanToken() bool {
 			} else {
 				fmt.Println(SLASH, "/", "null")
 			}
+		case ' ':
+		case '\r':
+		case '\t':
 		default:
 			fmt.Fprintf(os.Stderr, "[line %d] Error: Unexpected character: %c\n", lineNo, c)
 			error = true
